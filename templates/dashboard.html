@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>Analytics Dashboard</title>
+
+<style>
+
+body{
+    font-family:'Segoe UI',sans-serif;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    min-height:100vh;
+    margin:0;
+    padding:0;
+    text-align:center;
+    color:white;
+}
+
+/* Navbar */
+
+.navbar{
+    background:rgba(0,0,0,0.2);
+    backdrop-filter:blur(10px);
+    padding:15px;
+}
+
+.navbar a{
+    color:white;
+    text-decoration:none;
+    margin:0 20px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.navbar a:hover{
+    color:#ffd700;
+}
+
+/* Heading */
+
+.page-title{
+    margin-top:30px;
+    color:white;
+}
+
+/* Stats Section */
+
+.stats-container{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:20px;
+    margin-top:30px;
+}
+
+.card{
+    width:250px;
+
+    background:rgba(255,255,255,0.15);
+
+    backdrop-filter:blur(15px);
+
+    border-radius:20px;
+
+    padding:20px;
+
+    border:1px solid rgba(255,255,255,0.2);
+
+    box-shadow:0 8px 32px rgba(0,0,0,0.2);
+}
+
+.card h2{
+    font-size:20px;
+}
+
+.card h1{
+    color:#ffd700;
+}
+
+/* Charts */
+
+.chart-container{
+    width:85%;
+    margin:30px auto;
+
+    background:rgba(255,255,255,0.15);
+
+    backdrop-filter:blur(15px);
+
+    border-radius:20px;
+
+    padding:25px;
+
+    border:1px solid rgba(255,255,255,0.2);
+
+    box-shadow:0 8px 32px rgba(0,0,0,0.2);
+}
+
+.chart-container h2{
+    color:white;
+}
+
+.chart-image{
+    width:auto;
+    max-width:450px;
+    height:auto;
+    border-radius:15px;
+    padding:0;
+    background:none;
+}
+
+/* Footer */
+
+footer{
+    margin-top:30px;
+    color:white;
+    padding:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- Navbar -->
+
+<div class="navbar">
+    <a href="/">🏠 Home</a>
+    <a href="/history">📜 History</a>
+    <a href="/dashboard">📊 Dashboard</a>
+    <a href="/download">📥 Download</a>
+</div>
+
+<h1 class="page-title">
+📊 Analytics Dashboard
+</h1>
+
+<!-- Statistics Cards -->
+
+<div class="stats-container">
+
+
+<div class="card">
+    <h2>📈 Total Predictions</h2>
+    <h1>{{ total_predictions }}</h1>
+</div>
+
+<div class="card">
+    <h2>😊 Common Emotion</h2>
+    <h1>{{ most_common_emotion }}</h1>
+</div>
+
+<div class="card">
+    <h2>⚠ High Stress Events</h2>
+    <h1>{{ high_stress_count }}</h1>
+</div>
+
+
+</div>
+
+<!-- Emotion Chart -->
+
+<div class="chart-container">
+
+
+<h2>🎭 Emotion Distribution</h2>
+
+<img
+    class="chart-image"
+    src="{{ url_for('static', filename='emotion_chart.png') }}">
+
+
+</div>
+
+<!-- Stress Chart -->
+
+<div class="chart-container">
+
+
+<h2>📊 Stress Distribution</h2>
+
+<img
+    class="chart-image"
+    src="{{ url_for('static', filename='stress_chart.png') }}">
+
+
+</div>
+
+<footer>
+    <p>Developed by Roopa Ramthapure</p>
+</footer>
+
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+
+```
+<style>
+
+    body{
+        font-family:'Segoe UI',sans-serif;
+        background:linear-gradient(135deg,#667eea,#764ba2);
+        min-height:100vh;
+        margin:0;
+        padding:0;
+        color:white;
+    }
+
+    .navbar{
+        background:rgba(0,0,0,0.2);
+        backdrop-filter:blur(10px);
+        padding:15px;
+        text-align:center;
+    }
+
+    .navbar a{
+        color:white;
+        text-decoration:none;
+        margin:0 20px;
+        font-size:18px;
+        font-weight:bold;
+    }
+
+    .navbar a:hover{
+        color:#ffd700;
+    }
+
+    .glass-card{
+        width:85%;
+        margin:30px auto;
+        padding:25px;
+
+        background:rgba(255,255,255,0.15);
+
+        backdrop-filter:blur(15px);
+
+        border-radius:20px;
+
+        border:1px solid rgba(255,255,255,0.2);
+
+        box-shadow:0 8px 32px rgba(0,0,0,0.2);
+    }
+
+    button{
+        padding:12px 25px;
+        border:none;
+        border-radius:10px;
+        cursor:pointer;
+        font-weight:bold;
+        margin:10px;
+    }
+
+    button:hover{
+        transform:translateY(-3px);
+    }
+
+    footer{
+        text-align:center;
+        padding:20px;
+        margin-top:30px;
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <a href="/">🏠 Home</a>
+    <a href="/history">📜 History</a>
+    <a href="/dashboard">📊 Dashboard</a>
+    <a href="/download">📥 Download</a>
+</div>
+
+{% block content %}
+{% endblock %}
+
+<footer>
+    Developed by Roopa Ramthapure
+</footer>
+
+</body>
+</html>

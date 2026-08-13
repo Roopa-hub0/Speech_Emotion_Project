@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VocalSense AI</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            font-family:'Segoe UI',sans-serif;
+            background:linear-gradient(135deg,#4c5bd4,#764ba2,#9333ea);
+            min-height:100vh;
+            text-align:center;
+            color:white;
+        }
+
+        .navbar{
+            width:100%;
+            display:flex;
+            justify-content:space-around;
+            align-items:center;
+            flex-wrap:wrap;
+            padding:20px 30px;
+            background:rgba(255,255,255,0.08);
+            backdrop-filter:blur(12px);
+        }
+
+        .logo{
+            font-size:34px;
+            font-weight:bold;
+            white-space:nowrap;
+        }
+
+        .nav-links a{
+            color:white;
+            text-decoration:none;
+            margin-left:25px;
+            font-size:16px;
+            font-weight:bold;
+        }
+
+        .nav-links a:hover{
+            color:#ffd700;
+        }
+
+        .container{
+            width:90%;
+            max-width:800px;
+            margin:50px auto;
+            padding:40px;
+            background:rgba(255,255,255,0.14);
+            backdrop-filter:blur(20px);
+            border-radius:25px;
+            border:1px solid rgba(255,255,255,0.2);
+            box-shadow:0 10px 40px rgba(0,0,0,0.25);
+        }
+
+        .main-title{
+            font-size:52px;
+            font-weight:bold;
+            margin-bottom:10px;
+        }
+
+        .subtitle{
+            font-size:22px;
+            color:#e5e7eb;
+            margin-bottom:35px;
+        }
+
+        input[type="file"]{
+            margin:20px;
+            font-size:16px;
+            color:white;
+        }
+
+        button{
+            padding:14px 30px;
+            border:none;
+            border-radius:14px;
+            cursor:pointer;
+            font-weight:bold;
+            font-size:17px;
+            margin:10px;
+            background:white;
+            color:#4c1d95;
+            transition:0.3s;
+        }
+
+        button:hover{
+            transform:translateY(-4px);
+            box-shadow:0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .result{
+            margin-top:35px;
+            background:rgba(255,255,255,0.18);
+            padding:30px;
+            border-radius:20px;
+        }
+
+        .spectrogram-image{
+            width:350px;
+            margin:20px auto;
+            display:block;
+            border-radius:18px;
+            box-shadow:0 8px 25px rgba(0,0,0,0.35);
+        }
+
+        .emotion{
+            font-size:32px;
+            font-weight:bold;
+            margin-bottom:15px;
+        }
+
+        .gender{
+            font-size:26px;
+            font-weight:bold;
+            margin-top:10px;
+            margin-bottom:18px;
+            color:#ffd700;
+        }
+
+        .uncertain-badge{
+            display:inline-block;
+            margin-top:15px;
+            padding:12px 24px;
+            background:rgba(255,193,7,0.2);
+            color:#ffe082;
+            border:1px solid rgba(255,193,7,0.5);
+            border-radius:14px;
+            font-size:28px;
+            font-weight:bold;
+        }
+
+        .confidence-box{
+            margin:20px auto;
+            width:70%;
+        }
+
+        .progress-container{
+            width:100%;
+            height:22px;
+            background:#ddd;
+            border-radius:30px;
+            overflow:hidden;
+        }
+
+        .progress-bar{
+            height:100%;
+            width:{{ confidence }}%;
+            background:linear-gradient(90deg,#06b6d4,#3b82f6);
+            border-radius:30px;
+        }
+
+        .stress{
+            font-size:24px;
+            margin-top:20px;
+        }
+
+        .recommendation{
+            margin-top:15px;
+            font-size:18px;
+            line-height:1.6;
+        }
+
+        .warning{
+            margin-top:20px;
+            padding:15px;
+            background:rgba(255,0,0,0.18);
+            border:1px solid rgba(255,150,150,0.5);
+            border-radius:12px;
+            color:#ffe4e4;
+            font-weight:bold;
+        }
+
+        footer{
+            margin-top:30px;
+            padding-bottom:20px;
+            color:white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <div class="logo">🎤 VocalSense AI</div>
+
+        <div class="nav-links">
+            <a href="/">🏠 Home</a>
+            <a href="/history">📜 History</a>
+            <a href="/dashboard">📊 Dashboard</a>
+            <a href="/download">📥 Download</a>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <h1 class="main-title">VocalSense AI</h1>
+
+        <p class="subtitle">
+            Real-Time Emotion Intelligence Platform
+        </p>
+
+        <form action="/predict" method="post" enctype="multipart/form-data">
+            <input type="file" name="audio" required>
+            <br>
+            <button type="submit">Analyze Audio</button>
+        </form>
+
+        <a href="/record">
+            <button type="button">🎤 Record Audio</button>
+        </a>
+
+        {% if emotion %}
+        <div class="result">
+
+            {% if spectrogram %}
+            <h3>Generated Spectrogram</h3>
+            <img src="{{ url_for('static', filename=spectrogram) }}" class="spectrogram-image">
+            {% endif %}
+
+            {% if emotion == "Uncertain" %}
+            <div class="uncertain-badge">
+                ⚠ Emotion Detected: Uncertain
+            </div>
+            {% else %}
+            <div class="emotion">
+                Emotion Detected: {{ emotion }}
+            </div>
+            {% endif %}
+
+            {% if gender %}
+            <div class="gender">
+                Gender Detected: {{ gender }}
+            </div>
+            {% endif %}
+
+            <h3>Confidence Score</h3>
+
+            <div class="confidence-box">
+                <div class="progress-container">
+                    <div class="progress-bar"></div>
+                </div>
+            </div>
+
+            <p>{{ confidence }}%</p>
+
+            <div class="stress">
+                Stress Level: {{ stress }}
+            </div>
+
+            <div class="recommendation">
+                <h3>Recommendation</h3>
+                <p>{{ recommendation }}</p>
+            </div>
+
+            {% if confidence is defined and confidence < 50 %}
+            <div class="warning">
+                ⚠ Low confidence prediction. Please speak clearly and try again.
+            </div>
+            {% endif %}
+
+        </div>
+        {% endif %}
+
+    </div>
+
+    <footer>
+        <p>Powered by VocalSense AI | Developed by Roopa Ramthapure</p>
+    </footer>
+
+</body>
+</html>

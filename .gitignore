@@ -1,0 +1,13 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.wav
+*.mp3
+*.flac
+*.jpg
+*.jpeg
+*.png
+*.npy
+*.npz
+dataset/archive2
